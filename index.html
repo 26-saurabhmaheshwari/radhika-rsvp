@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>राधिका संग दक्षजी – RSVP</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #faf7f0; color: #3a2510; min-height: 100vh; }
+.top-border { height: 5px; background: linear-gradient(to right, #7b1c2e, #c9963a, #7b1c2e); }
+.wrapper { max-width: 680px; margin: 0 auto; padding: 20px 14px 80px; }
+.header { text-align: center; background: linear-gradient(135deg, #7b1c2e 0%, #9e2438 100%); color: white; border-radius: 16px; padding: 24px 16px; margin-bottom: 20px; box-shadow: 0 6px 24px rgba(123,28,46,0.3); }
+.header .om { font-size: 1.4rem; display: block; margin-bottom: 6px; }
+.header h1 { font-size: clamp(1.4rem, 5vw, 1.9rem); font-weight: 700; margin-bottom: 4px; }
+.header .sub { font-size: 0.9rem; opacity: 0.85; margin-bottom: 10px; }
+.header hr { border: none; border-top: 1px solid rgba(255,255,255,0.25); margin: 10px 0; }
+.header .info { font-size: 0.88rem; opacity: 0.9; }
+.card { background: white; border-radius: 14px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(44,26,14,0.08); border-top: 3px solid #7b1c2e; }
+.card-title { font-size: 0.97rem; font-weight: 700; color: #7b1c2e; margin-bottom: 16px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.row.one { grid-template-columns: 1fr; }
+.row.three { grid-template-columns: 1fr 1fr 1fr; }
+@media(max-width:500px) { .row, .row.three { grid-template-columns: 1fr; } }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.lbl { font-size: 0.78rem; font-weight: 600; color: #8a7060; text-transform: uppercase; letter-spacing: 0.03em; }
+.req { color: #7b1c2e; }
+input[type=text], input[type=tel], input[type=number], select { border: 1.5px solid #e0d5c5; border-radius: 10px; padding: 11px 13px; font-size: 0.95rem; width: 100%; background: #fdfaf6; color: #3a2510; -webkit-appearance: none; appearance: none; font-family: inherit; }
+input:focus, select:focus { outline: none; border-color: #c9963a; box-shadow: 0 0 0 3px rgba(201,150,58,0.15); background: white; }
+.radio-grp { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.r-opt { flex: 1; min-width: 130px; display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 11px 14px; border: 1.5px solid #e0d5c5; border-radius: 10px; font-size: 0.9rem; transition: all 0.2s; user-select: none; background: #fdfaf6; }
+.r-opt.selected { border-color: #c9963a; background: #fdf6e3; font-weight: 600; color: #5a3010; }
+.r-opt input { accent-color: #c9963a; width: 16px; height: 16px; cursor: pointer; }
+.tbl-outer { overflow-x: auto; border-radius: 12px; border: 1.5px solid #e2c97e; margin-top: 14px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.83rem; min-width: 480px; }
+thead tr { background: linear-gradient(135deg, #7b1c2e, #9e2438); color: white; }
+thead th { padding: 11px 8px; text-align: left; font-size: 0.78rem; white-space: nowrap; font-weight: 600; }
+tbody tr { border-bottom: 1px solid #f5ede0; }
+tbody tr:last-child { border-bottom: none; }
+tbody td { padding: 8px 6px; vertical-align: middle; }
+.rnum { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #c9963a, #7b1c2e); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+tbody td input[type=text], tbody td input[type=number], tbody td select { padding: 8px 8px; font-size: 0.82rem; border-radius: 8px; }
+.up-label { display: inline-flex; align-items: center; gap: 5px; padding: 7px 10px; border: 1.5px dashed #c9963a; border-radius: 8px; background: #fdf6e3; color: #9a6e20; font-size: 0.75rem; cursor: pointer; white-space: nowrap; }
+.up-label input { display: none; }
+.fname { font-size: 0.7rem; color: #2d6a4f; margin-top: 3px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.note { background: #fffbee; border-left: 3px solid #c9963a; padding: 9px 12px; border-radius: 0 8px 8px 0; font-size: 0.78rem; color: #8a7060; margin-top: 10px; line-height: 1.5; }
+.submit-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #7b1c2e, #9e2438); color: white; border: none; border-radius: 14px; font-size: 1.05rem; font-weight: 700; cursor: pointer; margin-top: 8px; box-shadow: 0 4px 18px rgba(123,28,46,0.35); font-family: inherit; transition: all 0.2s; }
+.submit-btn:active { transform: scale(0.98); }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+#not-coming-msg { display: none; text-align: center; padding: 24px; background: white; border-radius: 14px; margin-bottom: 16px; color: #8a7060; line-height: 1.9; box-shadow: 0 2px 12px rgba(44,26,14,0.08); }
+#members-section, #travel-section, #stay-section, #submit-section { display: none; }
+#success-screen { display: none; text-align: center; padding: 60px 20px; animation: fadeUp 0.5s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+#success-screen .ck { font-size: 3.5rem; display: block; margin-bottom: 14px; }
+#success-screen h2 { font-size: 1.7rem; color: #7b1c2e; margin-bottom: 10px; font-weight: 700; }
+#success-screen p { color: #8a7060; font-size: 0.95rem; line-height: 2; }
+.spinner { display: inline-block; width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 6px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.err { background: #fde8e8; border: 1px solid #f5c6c6; border-radius: 10px; padding: 12px 16px; color: #c0392b; font-size: 0.88rem; margin-bottom: 14px; display: none; }
+</style>
+</head>
+<body>
+<div class="top-border"></div>
+<div class="wrapper">
+
+  <div class="header">
+    <span class="om">🙏🌸 जय श्री कृष्ण 🌸🙏</span>
+    <h1>राधिका संग दक्षजी</h1>
+    <p class="sub">Vivah RSVP — उपस्थिति जानकारी</p>
+    <hr>
+    <div class="info">📅 28 एवं 29 अप्रैल &nbsp;|&nbsp; 📍 चोखरधाणी, नागपुर</div>
+  </div>
+
+  <div id="err" class="err"></div>
+
+  <form id="rsvp-form" onsubmit="return false">
+    <div class="card">
+      <div class="card-title">👤 आपकी जानकारी / Your Details</div>
+      <div class="row">
+        <div class="field">
+          <span class="lbl">नाम / Name <span class="req">*</span></span>
+          <input type="text" id="f-name" placeholder="पूरा नाम लिखें">
+        </div>
+        <div class="field">
+          <span class="lbl">Mobile <span class="req">*</span></span>
+          <input type="tel" id="f-mobile" placeholder="10 अंक का नंबर">
+        </div>
+      </div>
+      <div class="field">
+        <span class="lbl">क्या आप विवाह में आ रहे हैं? <span class="req">*</span></span>
+        <div class="radio-grp">
+          <label class="r-opt" id="opt-yes"><input type="radio" name="att" value="yes" onchange="toggleAtt('yes')"> हाँ, ज़रूर आएंगे 🎉</label>
+          <label class="r-opt" id="opt-no"><input type="radio" name="att" value="no" onchange="toggleAtt('no')"> नहीं आ सकते 🙏</label>
+        </div>
+      </div>
+    </div>
+
+    <div id="not-coming-msg">🙏 आपकी जानकारी मिल गई।<br>आपकी अनुपस्थिति में भी आपका आशीर्वाद हमारे साथ है।<br><strong style="color:#7b1c2e">🌸 राधिका और दक्षजी को आशीर्वाद दें 🌸</strong></div>
+
+    <div class="card" id="members-section">
+      <div class="card-title">👨‍👩‍👧 सदस्य जानकारी / Travel Group</div>
+      <div style="max-width:240px;margin-bottom:4px">
+        <div class="field">
+          <span class="lbl">कुल कितने लोग? (आप सहित) <span class="req">*</span></span>
+          <select id="f-count" onchange="buildTable(this.value)">
+            <option value="">-- चुनें --</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option>
+          </select>
+        </div>
+      </div>
+      <div id="tbl-wrap" style="display:none">
+        <div class="tbl-outer">
+          <table>
+            <thead><tr><th>#</th><th>नाम / Name</th><th>लिंग</th><th>आयु</th><th>ID Card</th></tr></thead>
+            <tbody id="tbl-body"></tbody>
+          </table>
+        </div>
+        <div class="note">📎 आधार कार्ड, पैन कार्ड, या कोई सरकारी ID अपलोड करें।</div>
+      </div>
+    </div>
+
+    <div class="card" id="travel-section">
+      <div class="card-title">🚆 यात्रा जानकारी / Travel Details</div>
+      <div class="row">
+        <div class="field"><span class="lbl">शहर / From City <span class="req">*</span></span><input type="text" id="f-city" placeholder="शहर का नाम"></div>
+        <div class="field"><span class="lbl">यात्रा का माध्यम <span class="req">*</span></span>
+          <select id="f-mode"><option value="">-- चुनें --</option><option>Train / ट्रेन</option><option>Flight / फ्लाइट</option><option>Car / कार</option><option>Bus / बस</option><option>Other / अन्य</option></select>
+        </div>
+      </div>
+      <div class="row three">
+        <div class="field"><span class="lbl">Train / Flight No.</span><input type="text" id="f-train" placeholder="उदा. 12951"></div>
+        <div class="field"><span class="lbl">आने का दिन <span class="req">*</span></span>
+          <select id="f-adate"><option value="">-- चुनें --</option><option>27 अप्रैल</option><option>28 अप्रैल</option><option>29 अप्रैल</option></select>
+        </div>
+        <div class="field"><span class="lbl">पहुँचने का समय <span class="req">*</span></span>
+          <select id="f-atime"><option value="">-- चुनें --</option><option>सुबह 6–9 बजे</option><option>सुबह 9–12 बजे</option><option>दोपहर 12–3 बजे</option><option>दोपहर 3–6 बजे</option><option>शाम 6–9 बजे</option><option>रात 9 बजे के बाद</option></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="stay-section">
+      <div class="card-title">🏨 रहने की व्यवस्था / Accommodation</div>
+      <div class="row">
+        <div class="field"><span class="lbl">रहने की व्यवस्था चाहिए? <span class="req">*</span></span>
+          <div class="radio-grp">
+            <label class="r-opt" id="acc-yes"><input type="radio" name="acc" value="yes" onchange="toggleRooms(true)"> हाँ</label>
+            <label class="r-opt" id="acc-no"><input type="radio" name="acc" value="no" onchange="toggleRooms(false)"> नहीं</label>
+          </div>
+        </div>
+        <div class="field" id="f-rooms-wrap" style="display:none"><span class="lbl">कितने कमरे?</span><input type="number" id="f-rooms" min="1" max="10" placeholder="संख्या"></div>
+      </div>
+    </div>
+
+    <div id="submit-section">
+      <button type="button" class="submit-btn" id="submit-btn" onclick="submitForm()">🌸 जानकारी भेजें / Submit RSVP 🌸</button>
+    </div>
+  </form>
+
+  <div id="success-screen">
+    <span class="ck">🌸</span>
+    <h2>धन्यवाद! 🙏</h2>
+    <p>आपकी जानकारी सफलतापूर्वक save हो गई है।<br>राधिका संग दक्षजी के विवाह में<br><strong style="color:#7b1c2e">आपका हार्दिक स्वागत है!</strong><br><br>📅 28 & 29 अप्रैल &nbsp;|&nbsp; 📍 चोखरधाणी, नागपुर</p>
+  </div>
+</div>
+
+<script>
+// ✅ Apps Script Backend URL — already set!
+var BACKEND = 'https://script.google.com/macros/s/AKfycbyQpOaoduMtHNs9GrDTebZZmv7lgDHIxING-QJrR9R0-N4y1mAteFVXj9Uz9eURIY2SyQ/exec';
+
+var memberFiles = {};
+
+function toggleAtt(v) {
+  var y = v==='yes';
+  sel('opt-yes',y); sel('opt-no',!y);
+  show('not-coming-msg',!y);
+  show('members-section',y); show('travel-section',y);
+  show('stay-section',y); show('submit-section',true);
+}
+function sel(id,on){ document.getElementById(id).className='r-opt'+(on?' selected':''); }
+function show(id,on){ document.getElementById(id).style.display=on?'block':'none'; }
+
+function buildTable(n) {
+  var wrap=document.getElementById('tbl-wrap'), body=document.getElementById('tbl-body');
+  memberFiles={};
+  if(!n){wrap.style.display='none';return;}
+  body.innerHTML='';
+  for(var i=1;i<=parseInt(n);i++){
+    (function(x){
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td><div class="rnum">'+x+'</div></td>'+
+        '<td><input type="text" id="mn-'+x+'" placeholder="'+(x===1?'आपका नाम':'नाम')+'" style="width:115px"></td>'+
+        '<td><select id="mg-'+x+'" style="width:100px"><option value="">लिंग</option><option>पुरुष</option><option>महिला</option><option>बच्चा</option></select></td>'+
+        '<td><input type="number" id="ma-'+x+'" placeholder="आयु" min="1" max="120" style="width:62px"></td>'+
+        '<td><label class="up-label">📎 Upload<input type="file" accept="image/*,.pdf" onchange="hf(this,'+x+')"></label><div class="fname" id="fn-'+x+'"></div></td>';
+      body.appendChild(tr);
+    })(i);
+  }
+  wrap.style.display='block';
+}
+
+function hf(input,idx){
+  if(!input.files||!input.files[0])return;
+  document.getElementById('fn-'+idx).textContent='✅ '+input.files[0].name;
+  var r=new FileReader();
+  r.onload=function(e){memberFiles[idx]=e.target.result;};
+  r.readAsDataURL(input.files[0]);
+}
+
+function toggleRooms(s){
+  document.getElementById('f-rooms-wrap').style.display=s?'flex':'none';
+  sel('acc-yes',s); sel('acc-no',!s);
+}
+
+function showErr(m){
+  var b=document.getElementById('err');
+  b.textContent=m; b.style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function submitForm(){
+  document.getElementById('err').style.display='none';
+  var att=document.querySelector('input[name="att"]:checked');
+  if(!att){showErr('कृपया बताएं कि आप आ रहे हैं या नहीं।');return;}
+  var name=document.getElementById('f-name').value.trim();
+  var mob=document.getElementById('f-mobile').value.trim();
+  if(!name){showErr('कृपया अपना नाम भरें।');return;}
+  if(!mob||mob.length<10){showErr('कृपया सही मोबाइल नंबर भरें।');return;}
+
+  var data={name:name,mobile:mob,attending:att.value,members:[]};
+
+  if(att.value==='yes'){
+    var cnt=document.getElementById('f-count').value;
+    if(!cnt){showErr('कृपया कुल लोगों की संख्या चुनें।');return;}
+    data.totalPeople=cnt;
+    for(var i=1;i<=parseInt(cnt);i++){
+      var mn=(document.getElementById('mn-'+i)||{}).value||'';
+      mn=mn.trim();
+      if(!mn){showErr('कृपया यात्री '+i+' का नाम भरें।');return;}
+      data.members.push({name:mn,gender:(document.getElementById('mg-'+i)||{}).value||'',age:(document.getElementById('ma-'+i)||{}).value||'',idFile:memberFiles[i]||null});
+    }
+    var ac=document.querySelector('input[name="acc"]:checked');
+    data.fromCity=document.getElementById('f-city').value;
+    data.travelMode=document.getElementById('f-mode').value;
+    data.trainFlight=document.getElementById('f-train').value;
+    data.arrivalDate=document.getElementById('f-adate').value;
+    data.arrivalTime=document.getElementById('f-atime').value;
+    data.accommodation=ac?ac.value:'';
+    data.rooms=(document.getElementById('f-rooms')||{}).value||'';
+  }
+
+  var btn=document.getElementById('submit-btn');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span> Save हो रहा है...';
+
+  fetch(BACKEND,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+  .then(function(){
+    document.getElementById('rsvp-form').style.display='none';
+    document.getElementById('success-screen').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  })
+  .catch(function(){
+    showErr('कुछ गलत हुआ। कृपया दोबारा try करें।');
+    btn.disabled=false;
+    btn.innerHTML='🌸 जानकारी भेजें / Submit RSVP 🌸';
+  });
+}
+</script>
+</body>
+</html>
