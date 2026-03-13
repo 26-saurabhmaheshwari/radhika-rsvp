@@ -251,14 +251,29 @@ function submitForm(){
   btn.disabled=true;
   btn.innerHTML='<span class="spinner"></span> Save हो रहा है...';
 
-  fetch(BACKEND + '?data=' + encodeURIComponent(JSON.stringify(data)), {method: 'GET'})  
-  .then(function(){
-    document.getElementById('rsvp-form').style.display='none';
-    document.getElementById('success-screen').style.display='block';
-    window.scrollTo({top:0,behavior:'smooth'});
+  // Remove ID files from data before sending (too large for URL)
+  var sendData = JSON.parse(JSON.stringify(data));
+  for (var k=0; k<sendData.members.length; k++) {
+    delete sendData.members[k].idFile;
+  }
+
+  var url = BACKEND + '?data=' + encodeURIComponent(JSON.stringify(sendData));
+
+  fetch(url, {method:'GET'})
+  .then(function(res){ return res.json(); })
+  .then(function(res){
+    if(res.success){
+      document.getElementById('rsvp-form').style.display='none';
+      document.getElementById('success-screen').style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    } else {
+      showErr('Error: ' + (res.error||'Unknown error'));
+      btn.disabled=false;
+      btn.innerHTML='🌸 जानकारी भेजें / Submit RSVP 🌸';
+    }
   })
-  .catch(function(){
-    showErr('कुछ गलत हुआ। कृपया दोबारा try करें।');
+  .catch(function(e){
+    showErr('कुछ गलत हुआ। कृपया दोबारा try करें। ' + e.message);
     btn.disabled=false;
     btn.innerHTML='🌸 जानकारी भेजें / Submit RSVP 🌸';
   });
