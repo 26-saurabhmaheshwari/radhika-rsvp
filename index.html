@@ -110,11 +110,10 @@ tbody td input[type=text], tbody td input[type=number], tbody td select { paddin
       <div id="tbl-wrap" style="display:none">
         <div class="tbl-outer">
           <table>
-            <thead><tr><th>#</th><th>नाम / Name</th><th>लिंग</th><th>आयु</th><th>ID Card</th></tr></thead>
+            <thead><tr><th>#</th><th>नाम / Name</th><th>लिंग</th><th>आयु</th></tr></thead>
             <tbody id="tbl-body"></tbody>
           </table>
         </div>
-        <div class="note">📎 आधार कार्ड, पैन कार्ड, या कोई सरकारी ID अपलोड करें।</div>
       </div>
     </div>
 
@@ -129,11 +128,9 @@ tbody td input[type=text], tbody td input[type=number], tbody td select { paddin
       <div class="row three">
         <div class="field"><span class="lbl">Train / Flight No.</span><input type="text" id="f-train" placeholder="उदा. 12951"></div>
         <div class="field"><span class="lbl">आने का दिन <span class="req">*</span></span>
-          <select id="f-adate"><option value="">-- चुनें --</option><option>27 अप्रैल</option><option>28 अप्रैल</option><option>29 अप्रैल</option></select>
+          <select id="f-adate"><option value="">-- चुनें --</option><option>28 अप्रैल</option><option>29 अप्रैल</option></select>
         </div>
-        <div class="field"><span class="lbl">पहुँचने का समय <span class="req">*</span></span>
-          <select id="f-atime"><option value="">-- चुनें --</option><option>सुबह 6–9 बजे</option><option>सुबह 9–12 बजे</option><option>दोपहर 12–3 बजे</option><option>दोपहर 3–6 बजे</option><option>शाम 6–9 बजे</option><option>रात 9 बजे के बाद</option></select>
-        </div>
+        <div class="field"><span class="lbl">पहुँचने का समय <span class="req">*</span></span><input type="text" id="f-atime" placeholder="उदा. सुबह 8:30 बजे"></div>
       </div>
     </div>
 
@@ -146,7 +143,7 @@ tbody td input[type=text], tbody td input[type=number], tbody td select { paddin
             <label class="r-opt" id="acc-no"><input type="radio" name="acc" value="no" onchange="toggleRooms(false)"> नहीं</label>
           </div>
         </div>
-        <div class="field" id="f-rooms-wrap" style="display:none"><span class="lbl">कितने कमरे?</span><input type="number" id="f-rooms" min="1" max="10" placeholder="संख्या"></div>
+        
       </div>
     </div>
 
@@ -188,7 +185,7 @@ function buildTable(n) {
       var tr=document.createElement('tr');
       tr.innerHTML='<td><div class="rnum">'+x+'</div></td>'+
         '<td><input type="text" id="mn-'+x+'" placeholder="'+(x===1?'आपका नाम':'नाम')+'" style="width:115px"></td>'+
-        '<td><select id="mg-'+x+'" style="width:100px"><option value="">लिंग</option><option>पुरुष</option><option>महिला</option><option>बच्चा</option></select></td>'+
+        '<td><select id="mg-'+x+'" style="width:100px"><option value="">लिंग</option><option>पुरुष</option><option>महिला</option></select></td>'+
         '<td><input type="number" id="ma-'+x+'" placeholder="आयु" min="1" max="120" style="width:62px"></td>'+
         '<td><label class="up-label">📎 Upload<input type="file" accept="image/*,.pdf" onchange="hf(this,'+x+')"></label><div class="fname" id="fn-'+x+'"></div></td>';
       body.appendChild(tr);
@@ -205,10 +202,7 @@ function hf(input,idx){
   r.readAsDataURL(input.files[0]);
 }
 
-function toggleRooms(s){
-  document.getElementById('f-rooms-wrap').style.display=s?'flex':'none';
-  sel('acc-yes',s); sel('acc-no',!s);
-}
+function toggleRooms(s){ sel('acc-yes',s); sel('acc-no',!s); }
 
 function showErr(m){
   var b=document.getElementById('err');
@@ -244,7 +238,6 @@ function submitForm(){
     data.arrivalDate=document.getElementById('f-adate').value;
     data.arrivalTime=document.getElementById('f-atime').value;
     data.accommodation=ac?ac.value:'';
-    data.rooms=(document.getElementById('f-rooms')||{}).value||'';
   }
 
   var btn=document.getElementById('submit-btn');
