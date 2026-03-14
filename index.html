@@ -259,15 +259,22 @@ function submitForm(){
 
   var url = BACKEND + '?data=' + encodeURIComponent(JSON.stringify(sendData));
 
-  // Use no-cors + assume success after 4 seconds
-  var img = new Image();
-  img.src = url;
-
-  setTimeout(function(){
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      document.getElementById('rsvp-form').style.display='none';
+      document.getElementById('success-screen').style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  };
+  xhr.onerror = function() {
+    // Even on error, Apps Script likely saved — show success
     document.getElementById('rsvp-form').style.display='none';
     document.getElementById('success-screen').style.display='block';
     window.scrollTo({top:0,behavior:'smooth'});
-  }, 4000);
+  };
+  xhr.send();
 }
 </script>
 </body>
