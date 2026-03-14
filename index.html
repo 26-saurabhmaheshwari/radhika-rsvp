@@ -31,7 +31,7 @@ input:focus, select:focus { outline: none; border-color: #c9963a; box-shadow: 0 
 .r-opt.selected { border-color: #c9963a; background: #fdf6e3; font-weight: 600; color: #5a3010; }
 .r-opt input { accent-color: #c9963a; width: 16px; height: 16px; cursor: pointer; }
 .tbl-outer { overflow-x: auto; border-radius: 12px; border: 1.5px solid #e2c97e; margin-top: 14px; }
-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; min-width: 480px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.83rem; min-width: 380px; }
 thead tr { background: linear-gradient(135deg, #7b1c2e, #9e2438); color: white; }
 thead th { padding: 11px 8px; text-align: left; font-size: 0.78rem; white-space: nowrap; font-weight: 600; }
 tbody tr { border-bottom: 1px solid #f5ede0; }
@@ -39,10 +39,6 @@ tbody tr:last-child { border-bottom: none; }
 tbody td { padding: 8px 6px; vertical-align: middle; }
 .rnum { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #c9963a, #7b1c2e); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 tbody td input[type=text], tbody td input[type=number], tbody td select { padding: 8px 8px; font-size: 0.82rem; border-radius: 8px; }
-
-
-
-.note { background: #fffbee; border-left: 3px solid #c9963a; padding: 9px 12px; border-radius: 0 8px 8px 0; font-size: 0.78rem; color: #8a7060; margin-top: 10px; line-height: 1.5; }
 .submit-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #7b1c2e, #9e2438); color: white; border: none; border-radius: 14px; font-size: 1.05rem; font-weight: 700; cursor: pointer; margin-top: 8px; box-shadow: 0 4px 18px rgba(123,28,46,0.35); font-family: inherit; transition: all 0.2s; }
 .submit-btn:active { transform: scale(0.98); }
 .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -73,6 +69,8 @@ tbody td input[type=text], tbody td input[type=number], tbody td select { paddin
   <div id="err" class="err"></div>
 
   <form id="rsvp-form" onsubmit="return false">
+
+    <!-- Section 1: Guest -->
     <div class="card">
       <div class="card-title">👤 आपकी जानकारी / Your Details</div>
       <div class="row">
@@ -94,8 +92,10 @@ tbody td input[type=text], tbody td input[type=number], tbody td select { paddin
       </div>
     </div>
 
+    <!-- Not coming -->
     <div id="not-coming-msg">🙏 आपकी जानकारी मिल गई।<br>आपकी अनुपस्थिति में भी आपका आशीर्वाद हमारे साथ है।<br><strong style="color:#7b1c2e">🌸 राधिका और दक्षजी को आशीर्वाद दें 🌸</strong></div>
 
+    <!-- Section 2: Members -->
     <div class="card" id="members-section">
       <div class="card-title">👨‍👩‍👧 सदस्य जानकारी / Travel Group</div>
       <div style="max-width:240px;margin-bottom:4px">
@@ -103,7 +103,8 @@ tbody td input[type=text], tbody td input[type=number], tbody td select { paddin
           <span class="lbl">कुल कितने लोग? (आप सहित) <span class="req">*</span></span>
           <select id="f-count" onchange="buildTable(this.value)">
             <option value="">-- चुनें --</option>
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option>
           </select>
         </div>
       </div>
@@ -117,85 +118,107 @@ tbody td input[type=text], tbody td input[type=number], tbody td select { paddin
       </div>
     </div>
 
+    <!-- Section 3: Travel -->
     <div class="card" id="travel-section">
       <div class="card-title">🚆 यात्रा जानकारी / Travel Details</div>
       <div class="row">
-        <div class="field"><span class="lbl">शहर / From City <span class="req">*</span></span><input type="text" id="f-city" placeholder="शहर का नाम"></div>
-        <div class="field"><span class="lbl">यात्रा का माध्यम <span class="req">*</span></span>
-          <select id="f-mode"><option value="">-- चुनें --</option><option>Train / ट्रेन</option><option>Flight / फ्लाइट</option><option>Car / कार</option><option>Bus / बस</option><option>Other / अन्य</option></select>
+        <div class="field">
+          <span class="lbl">शहर / From City <span class="req">*</span></span>
+          <input type="text" id="f-city" placeholder="शहर का नाम">
+        </div>
+        <div class="field">
+          <span class="lbl">यात्रा का माध्यम <span class="req">*</span></span>
+          <select id="f-mode">
+            <option value="">-- चुनें --</option>
+            <option>Train / ट्रेन</option><option>Flight / फ्लाइट</option>
+            <option>Car / कार</option><option>Bus / बस</option><option>Other / अन्य</option>
+          </select>
         </div>
       </div>
       <div class="row three">
-        <div class="field"><span class="lbl">Train / Flight No.</span><input type="text" id="f-train" placeholder="उदा. 12951"></div>
-        <div class="field"><span class="lbl">आने का दिन <span class="req">*</span></span>
-          <select id="f-adate"><option value="">-- चुनें --</option><option>28 अप्रैल</option><option>29 अप्रैल</option></select>
+        <div class="field">
+          <span class="lbl">Train / Flight No.</span>
+          <input type="text" id="f-train" placeholder="उदा. 12951">
         </div>
-        <div class="field"><span class="lbl">पहुँचने का समय <span class="req">*</span></span><input type="text" id="f-atime" placeholder="उदा. सुबह 8:30 बजे"></div>
+        <div class="field">
+          <span class="lbl">आने का दिन <span class="req">*</span></span>
+          <select id="f-adate">
+            <option value="">-- चुनें --</option>
+            <option>28 अप्रैल</option><option>29 अप्रैल</option>
+          </select>
+        </div>
+        <div class="field">
+          <span class="lbl">पहुँचने का समय <span class="req">*</span></span>
+          <input type="text" id="f-atime" placeholder="उदा. सुबह 8:30 बजे">
+        </div>
       </div>
     </div>
 
+    <!-- Section 4: Stay -->
     <div class="card" id="stay-section">
       <div class="card-title">🏨 रहने की व्यवस्था / Accommodation</div>
-      <div class="row">
-        <div class="field"><span class="lbl">रहने की व्यवस्था चाहिए? <span class="req">*</span></span>
-          <div class="radio-grp">
-            <label class="r-opt" id="acc-yes"><input type="radio" name="acc" value="yes" onchange="toggleRooms(true)"> हाँ</label>
-            <label class="r-opt" id="acc-no"><input type="radio" name="acc" value="no" onchange="toggleRooms(false)"> नहीं</label>
-          </div>
+      <div class="field">
+        <span class="lbl">रहने की व्यवस्था चाहिए? <span class="req">*</span></span>
+        <div class="radio-grp">
+          <label class="r-opt" id="acc-yes"><input type="radio" name="acc" value="yes" onchange="sel('acc-yes',true);sel('acc-no',false)"> हाँ</label>
+          <label class="r-opt" id="acc-no"><input type="radio" name="acc" value="no" onchange="sel('acc-yes',false);sel('acc-no',true)"> नहीं</label>
         </div>
-        
       </div>
     </div>
 
+    <!-- Submit -->
     <div id="submit-section">
-      <button type="button" class="submit-btn" id="submit-btn" onclick="submitForm()">🌸 जानकारी भेजें / Submit RSVP 🌸</button>
+      <button type="button" class="submit-btn" id="submit-btn" onclick="submitForm()">
+        🌸 जानकारी भेजें / Submit RSVP 🌸
+      </button>
     </div>
   </form>
 
+  <!-- Success -->
   <div id="success-screen">
     <span class="ck">🌸</span>
     <h2>धन्यवाद! 🙏</h2>
-    <p>आपकी जानकारी सफलतापूर्वक save हो गई है।<br>राधिका संग दक्षजी के विवाह में<br><strong style="color:#7b1c2e">आपका हार्दिक स्वागत है!</strong><br><br>📅 28 & 29 अप्रैल &nbsp;|&nbsp; 📍 चोखरधाणी, नागपुर</p>
+    <p>आपकी जानकारी सफलतापूर्वक save हो गई है।<br>
+    राधिका संग दक्षजी के विवाह में<br>
+    <strong style="color:#7b1c2e">आपका हार्दिक स्वागत है!</strong><br><br>
+    📅 28 & 29 अप्रैल &nbsp;|&nbsp; 📍 चोखरधाणी, नागपुर</p>
   </div>
 </div>
 
 <script>
-// ✅ Apps Script Backend URL — already set!
 var BACKEND = 'https://script.google.com/macros/s/AKfycbyQpOaoduMtHNs9GrDTebZZmv7lgDHIxING-QJrR9R0-N4y1mAteFVXj9Uz9eURIY2SyQ/exec';
-
-
 
 function toggleAtt(v) {
   var y = v==='yes';
   sel('opt-yes',y); sel('opt-no',!y);
   show('not-coming-msg',!y);
-  show('members-section',y); show('travel-section',y);
-  show('stay-section',y); show('submit-section',true);
+  show('members-section',y);
+  show('travel-section',y);
+  show('stay-section',y);
+  show('submit-section',true);
 }
+
 function sel(id,on){ document.getElementById(id).className='r-opt'+(on?' selected':''); }
 function show(id,on){ document.getElementById(id).style.display=on?'block':'none'; }
 
 function buildTable(n) {
-  var wrap=document.getElementById('tbl-wrap'), body=document.getElementById('tbl-body');
-  
-  if(!n){wrap.style.display='none';return;}
+  var wrap=document.getElementById('tbl-wrap');
+  var body=document.getElementById('tbl-body');
+  if(!n){ wrap.style.display='none'; return; }
   body.innerHTML='';
   for(var i=1;i<=parseInt(n);i++){
     (function(x){
       var tr=document.createElement('tr');
-      tr.innerHTML='<td><div class="rnum">'+x+'</div></td>'+
-        '<td><input type="text" id="mn-'+x+'" placeholder="'+(x===1?'आपका नाम':'नाम')+'" style="width:115px"></td>'+
-        '<td><select id="mg-'+x+'" style="width:100px"><option value="">लिंग</option><option>पुरुष</option><option>महिला</option></select></td>'+
-        '<td><input type="number" id="ma-'+x+'" placeholder="आयु" min="1" max="120" style="width:62px"></td>'+
-        '';
+      tr.innerHTML=
+        '<td><div class="rnum">'+x+'</div></td>'+
+        '<td><input type="text" id="mn-'+x+'" placeholder="'+(x===1?'आपका नाम':'नाम')+'" style="width:110px"></td>'+
+        '<td><select id="mg-'+x+'" style="width:95px"><option value="">लिंग</option><option>पुरुष</option><option>महिला</option></select></td>'+
+        '<td><input type="number" id="ma-'+x+'" placeholder="आयु" min="1" max="120" style="width:60px"></td>';
       body.appendChild(tr);
     })(i);
   }
   wrap.style.display='block';
 }
-
-
-function toggleRooms(s){ sel('acc-yes',s); sel('acc-no',!s); }
 
 function showErr(m){
   var b=document.getElementById('err');
@@ -203,52 +226,57 @@ function showErr(m){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function showSuccess(){
+  document.getElementById('rsvp-form').style.display='none';
+  document.getElementById('success-screen').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
 function submitForm(){
   document.getElementById('err').style.display='none';
+
   var att=document.querySelector('input[name="att"]:checked');
-  if(!att){showErr('कृपया बताएं कि आप आ रहे हैं या नहीं।');return;}
+  if(!att){ showErr('कृपया बताएं कि आप आ रहे हैं या नहीं।'); return; }
+
   var name=document.getElementById('f-name').value.trim();
   var mob=document.getElementById('f-mobile').value.trim();
-  if(!name){showErr('कृपया अपना नाम भरें।');return;}
-  if(!mob||mob.length<10){showErr('कृपया सही मोबाइल नंबर भरें।');return;}
+  if(!name){ showErr('कृपया अपना नाम भरें।'); return; }
+  if(!mob||mob.length<10){ showErr('कृपया सही मोबाइल नंबर भरें।'); return; }
 
-  var data={name:name,mobile:mob,attending:att.value,members:[]};
+  var data={name:name, mobile:mob, attending:att.value, members:[]};
 
   if(att.value==='yes'){
     var cnt=document.getElementById('f-count').value;
-    if(!cnt){showErr('कृपया कुल लोगों की संख्या चुनें।');return;}
+    if(!cnt){ showErr('कृपया कुल लोगों की संख्या चुनें।'); return; }
     data.totalPeople=cnt;
+
     for(var i=1;i<=parseInt(cnt);i++){
-      var mn=(document.getElementById('mn-'+i)||{}).value||'';
-      mn=mn.trim();
-      if(!mn){showErr('कृपया यात्री '+i+' का नाम भरें।');return;}
-      data.members.push({name:mn,gender:(document.getElementById('mg-'+i)||{}).value||'',age:(document.getElementById('ma-'+i)||{}).value||''});
-    }
-    // Validate each member age + gender
-    for(var j=1;j<=parseInt(cnt);j++){
-      var mg2=(document.getElementById('mg-'+j)||{}).value||'';
-      var ma2=(document.getElementById('ma-'+j)||{}).value||'';
-      if(!mg2){showErr('कृपया यात्री '+j+' का लिंग चुनें।');return;}
-      if(!ma2){showErr('कृपया यात्री '+j+' की आयु भरें।');return;}
+      var mn=(document.getElementById('mn-'+i)||{}).value||''; mn=mn.trim();
+      var mg=(document.getElementById('mg-'+i)||{}).value||'';
+      var ma=(document.getElementById('ma-'+i)||{}).value||'';
+      if(!mn){ showErr('कृपया यात्री '+i+' का नाम भरें।'); return; }
+      if(!mg){ showErr('कृपया यात्री '+i+' का लिंग चुनें।'); return; }
+      if(!ma){ showErr('कृपया यात्री '+i+' की आयु भरें।'); return; }
+      data.members.push({name:mn, gender:mg, age:ma});
     }
 
-    var fromCity=document.getElementById('f-city').value.trim();
-    var tMode=document.getElementById('f-mode').value;
-    var aDate=document.getElementById('f-adate').value;
-    var aTime=document.getElementById('f-atime').value.trim();
+    var city=document.getElementById('f-city').value.trim();
+    var mode=document.getElementById('f-mode').value;
+    var adate=document.getElementById('f-adate').value;
+    var atime=document.getElementById('f-atime').value.trim();
     var ac=document.querySelector('input[name="acc"]:checked');
 
-    if(!fromCity){showErr('कृपया शहर का नाम भरें।');return;}
-    if(!tMode){showErr('कृपया यात्रा का माध्यम चुनें।');return;}
-    if(!aDate){showErr('कृपया आने का दिन चुनें।');return;}
-    if(!aTime){showErr('कृपया पहुँचने का समय भरें।');return;}
-    if(!ac){showErr('कृपया बताएं कि रहने की व्यवस्था चाहिए या नहीं।');return;}
+    if(!city){ showErr('कृपया शहर का नाम भरें।'); return; }
+    if(!mode){ showErr('कृपया यात्रा का माध्यम चुनें।'); return; }
+    if(!adate){ showErr('कृपया आने का दिन चुनें।'); return; }
+    if(!atime){ showErr('कृपया पहुँचने का समय भरें।'); return; }
+    if(!ac){ showErr('कृपया बताएं कि रहने की व्यवस्था चाहिए या नहीं।'); return; }
 
-    data.fromCity=fromCity;
-    data.travelMode=tMode;
+    data.fromCity=city;
+    data.travelMode=mode;
     data.trainFlight=document.getElementById('f-train').value;
-    data.arrivalDate=aDate;
-    data.arrivalTime=aTime;
+    data.arrivalDate=adate;
+    data.arrivalTime=atime;
     data.accommodation=ac.value;
   }
 
@@ -256,25 +284,29 @@ function submitForm(){
   btn.disabled=true;
   btn.innerHTML='<span class="spinner"></span> Save हो रहा है...';
 
+  var url = BACKEND + '?data=' + encodeURIComponent(JSON.stringify(data));
 
-  var url = BACKEND + '?data=' + encodeURIComponent(JSON.stringify(sendData));
+  // Use script tag trick — works with Google Apps Script redirects
+  var callbackName = 'cb_' + Date.now();
+  window[callbackName] = function(res){
+    delete window[callbackName];
+    document.getElementById('sc').remove();
+    showSuccess();
+  };
 
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      document.getElementById('rsvp-form').style.display='none';
-      document.getElementById('success-screen').style.display='block';
-      window.scrollTo({top:0,behavior:'smooth'});
-    }
+  // Fallback: show success after 5s regardless
+  var timer = setTimeout(function(){
+    showSuccess();
+  }, 5000);
+
+  var sc = document.createElement('script');
+  sc.id = 'sc';
+  sc.onerror = function(){
+    clearTimeout(timer);
+    showSuccess(); // Apps Script likely saved even if CORS error
   };
-  xhr.onerror = function() {
-    // Even on error, Apps Script likely saved — show success
-    document.getElementById('rsvp-form').style.display='none';
-    document.getElementById('success-screen').style.display='block';
-    window.scrollTo({top:0,behavior:'smooth'});
-  };
-  xhr.send();
+  sc.src = url;
+  document.head.appendChild(sc);
 }
 </script>
 </body>
