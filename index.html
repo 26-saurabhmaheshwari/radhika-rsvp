@@ -39,9 +39,9 @@ tbody tr:last-child { border-bottom: none; }
 tbody td { padding: 8px 6px; vertical-align: middle; }
 .rnum { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #c9963a, #7b1c2e); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 tbody td input[type=text], tbody td input[type=number], tbody td select { padding: 8px 8px; font-size: 0.82rem; border-radius: 8px; }
-.up-label { display: inline-flex; align-items: center; gap: 5px; padding: 7px 10px; border: 1.5px dashed #c9963a; border-radius: 8px; background: #fdf6e3; color: #9a6e20; font-size: 0.75rem; cursor: pointer; white-space: nowrap; }
-.up-label input { display: none; }
-.fname { font-size: 0.7rem; color: #2d6a4f; margin-top: 3px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+
+
 .note { background: #fffbee; border-left: 3px solid #c9963a; padding: 9px 12px; border-radius: 0 8px 8px 0; font-size: 0.78rem; color: #8a7060; margin-top: 10px; line-height: 1.5; }
 .submit-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #7b1c2e, #9e2438); color: white; border: none; border-radius: 14px; font-size: 1.05rem; font-weight: 700; cursor: pointer; margin-top: 8px; box-shadow: 0 4px 18px rgba(123,28,46,0.35); font-family: inherit; transition: all 0.2s; }
 .submit-btn:active { transform: scale(0.98); }
@@ -163,7 +163,7 @@ tbody td input[type=text], tbody td input[type=number], tbody td select { paddin
 // ✅ Apps Script Backend URL — already set!
 var BACKEND = 'https://script.google.com/macros/s/AKfycbyQpOaoduMtHNs9GrDTebZZmv7lgDHIxING-QJrR9R0-N4y1mAteFVXj9Uz9eURIY2SyQ/exec';
 
-var memberFiles = {};
+
 
 function toggleAtt(v) {
   var y = v==='yes';
@@ -177,7 +177,7 @@ function show(id,on){ document.getElementById(id).style.display=on?'block':'none
 
 function buildTable(n) {
   var wrap=document.getElementById('tbl-wrap'), body=document.getElementById('tbl-body');
-  memberFiles={};
+  
   if(!n){wrap.style.display='none';return;}
   body.innerHTML='';
   for(var i=1;i<=parseInt(n);i++){
@@ -187,20 +187,13 @@ function buildTable(n) {
         '<td><input type="text" id="mn-'+x+'" placeholder="'+(x===1?'आपका नाम':'नाम')+'" style="width:115px"></td>'+
         '<td><select id="mg-'+x+'" style="width:100px"><option value="">लिंग</option><option>पुरुष</option><option>महिला</option></select></td>'+
         '<td><input type="number" id="ma-'+x+'" placeholder="आयु" min="1" max="120" style="width:62px"></td>'+
-        '<td><label class="up-label">📎 Upload<input type="file" accept="image/*,.pdf" onchange="hf(this,'+x+')"></label><div class="fname" id="fn-'+x+'"></div></td>';
+        '';
       body.appendChild(tr);
     })(i);
   }
   wrap.style.display='block';
 }
 
-function hf(input,idx){
-  if(!input.files||!input.files[0])return;
-  document.getElementById('fn-'+idx).textContent='✅ '+input.files[0].name;
-  var r=new FileReader();
-  r.onload=function(e){memberFiles[idx]=e.target.result;};
-  r.readAsDataURL(input.files[0]);
-}
 
 function toggleRooms(s){ sel('acc-yes',s); sel('acc-no',!s); }
 
@@ -229,26 +222,40 @@ function submitForm(){
       var mn=(document.getElementById('mn-'+i)||{}).value||'';
       mn=mn.trim();
       if(!mn){showErr('कृपया यात्री '+i+' का नाम भरें।');return;}
-      data.members.push({name:mn,gender:(document.getElementById('mg-'+i)||{}).value||'',age:(document.getElementById('ma-'+i)||{}).value||'',idFile:memberFiles[i]||null});
+      data.members.push({name:mn,gender:(document.getElementById('mg-'+i)||{}).value||'',age:(document.getElementById('ma-'+i)||{}).value||''});
     }
+    // Validate each member age + gender
+    for(var j=1;j<=parseInt(cnt);j++){
+      var mg2=(document.getElementById('mg-'+j)||{}).value||'';
+      var ma2=(document.getElementById('ma-'+j)||{}).value||'';
+      if(!mg2){showErr('कृपया यात्री '+j+' का लिंग चुनें।');return;}
+      if(!ma2){showErr('कृपया यात्री '+j+' की आयु भरें।');return;}
+    }
+
+    var fromCity=document.getElementById('f-city').value.trim();
+    var tMode=document.getElementById('f-mode').value;
+    var aDate=document.getElementById('f-adate').value;
+    var aTime=document.getElementById('f-atime').value.trim();
     var ac=document.querySelector('input[name="acc"]:checked');
-    data.fromCity=document.getElementById('f-city').value;
-    data.travelMode=document.getElementById('f-mode').value;
+
+    if(!fromCity){showErr('कृपया शहर का नाम भरें।');return;}
+    if(!tMode){showErr('कृपया यात्रा का माध्यम चुनें।');return;}
+    if(!aDate){showErr('कृपया आने का दिन चुनें।');return;}
+    if(!aTime){showErr('कृपया पहुँचने का समय भरें।');return;}
+    if(!ac){showErr('कृपया बताएं कि रहने की व्यवस्था चाहिए या नहीं।');return;}
+
+    data.fromCity=fromCity;
+    data.travelMode=tMode;
     data.trainFlight=document.getElementById('f-train').value;
-    data.arrivalDate=document.getElementById('f-adate').value;
-    data.arrivalTime=document.getElementById('f-atime').value;
-    data.accommodation=ac?ac.value:'';
+    data.arrivalDate=aDate;
+    data.arrivalTime=aTime;
+    data.accommodation=ac.value;
   }
 
   var btn=document.getElementById('submit-btn');
   btn.disabled=true;
   btn.innerHTML='<span class="spinner"></span> Save हो रहा है...';
 
-  // Remove ID files from data before sending (too large for URL)
-  var sendData = JSON.parse(JSON.stringify(data));
-  for (var k=0; k<sendData.members.length; k++) {
-    delete sendData.members[k].idFile;
-  }
 
   var url = BACKEND + '?data=' + encodeURIComponent(JSON.stringify(sendData));
 
